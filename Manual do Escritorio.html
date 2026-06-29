@@ -1,0 +1,1591 @@
+<!DOCTYPE html>
+<!-- saved from url=(0046)file:///C:/Users/EduTI/Downloads/manual_1.html -->
+<html lang="pt-BR"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Manual do Escritório</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+  :root {
+    --bg: #0f1117;
+    --surface: #1a1d27;
+    --surface2: #22263a;
+    --border: #2e3348;
+    --accent: #5b8dee;
+    --accent2: #7c5cbf;
+    --success: #3ecf8e;
+    --warning: #f59e0b;
+    --danger: #ef4444;
+    --text: #e8eaf0;
+    --text2: #8b91a8;
+    --text3: #565d7a;
+    --radius: 10px;
+    --radius-sm: 6px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    font-size: 14px;
+  }
+
+  /* LAYOUT */
+  .app { display: flex; flex-direction: column; height: 100vh; }
+
+  header {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 0 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 56px;
+    flex-shrink: 0;
+  }
+
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 700;
+    font-size: 15px;
+    letter-spacing: -0.3px;
+  }
+
+  .logo-icon {
+    width: 30px; height: 30px;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px;
+  }
+
+  .nav {
+    display: flex;
+    gap: 2px;
+    background: var(--bg);
+    border-radius: var(--radius-sm);
+    padding: 3px;
+  }
+
+  .nav-btn {
+    background: none;
+    border: none;
+    color: var(--text2);
+    padding: 6px 14px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 500;
+    font-family: inherit;
+    transition: all 0.15s;
+    display: flex; align-items: center; gap: 6px;
+  }
+
+  .nav-btn:hover { color: var(--text); background: var(--surface2); }
+  .nav-btn.active { color: var(--text); background: var(--surface2); }
+
+  .sync-status {
+    display: flex; align-items: center; gap: 6px;
+    font-size: 12px; color: var(--text3);
+  }
+
+  .sync-dot {
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: var(--text3);
+  }
+  .sync-dot.ok { background: var(--success); }
+  .sync-dot.syncing { background: var(--warning); animation: pulse 1s infinite; }
+  .sync-dot.error { background: var(--danger); }
+
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+
+  /* MAIN */
+  .main { flex: 1; overflow: hidden; display: flex; }
+  .tab-content { display: none; width: 100%; overflow-y: auto; }
+  .tab-content.active { display: flex; flex-direction: column; }
+
+  /* TAB: NOVA DICA */
+  .nova-dica-wrap {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 32px 24px;
+    width: 100%;
+  }
+
+  .section-title {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 4px;
+    letter-spacing: -0.3px;
+  }
+
+  .section-sub {
+    color: var(--text2);
+    font-size: 13px;
+    margin-bottom: 24px;
+  }
+
+  .mode-toggle {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 20px;
+  }
+
+  .mode-btn {
+    padding: 7px 16px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border);
+    background: none;
+    color: var(--text2);
+    font-family: inherit;
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+
+  .mode-btn.active {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #fff;
+    font-weight: 600;
+  }
+
+  /* IA MODE */
+  .ia-box {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+  }
+
+  .ia-box textarea {
+    width: 100%;
+    min-height: 140px;
+    background: transparent;
+    border: none;
+    padding: 16px;
+    color: var(--text);
+    font-family: inherit;
+    font-size: 14px;
+    resize: vertical;
+    outline: none;
+    line-height: 1.6;
+  }
+
+  .ia-box textarea::placeholder { color: var(--text3); }
+
+  .ia-box-footer {
+    border-top: 1px solid var(--border);
+    padding: 10px 14px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .ia-hint { color: var(--text3); font-size: 12px; }
+
+  .btn {
+    padding: 8px 18px;
+    border-radius: var(--radius-sm);
+    border: none;
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.15s;
+    display: flex; align-items: center; gap: 6px;
+  }
+
+  .btn-primary { background: var(--accent); color: #fff; }
+  .btn-primary:hover { background: #4a7de0; }
+  .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
+
+  .btn-ghost {
+    background: none;
+    border: 1px solid var(--border);
+    color: var(--text2);
+  }
+  .btn-ghost:hover { border-color: var(--text2); color: var(--text); }
+
+  .btn-danger { background: var(--danger); color: #fff; }
+  .btn-danger:hover { background: #dc2626; }
+
+  .btn-success { background: var(--success); color: #0f1117; }
+
+  /* MANUAL MODE FORM */
+  .manual-form {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .form-row { display: flex; gap: 12px; }
+  .form-row > * { flex: 1; }
+
+  .field label {
+    display: block;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text2);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 6px;
+  }
+
+  .field input,
+  .field select,
+  .field textarea {
+    width: 100%;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 9px 12px;
+    color: var(--text);
+    font-family: inherit;
+    font-size: 14px;
+    outline: none;
+    transition: border-color 0.15s;
+  }
+
+  .field input:focus,
+  .field select:focus,
+  .field textarea:focus { border-color: var(--accent); }
+
+  .field textarea { min-height: 100px; resize: vertical; line-height: 1.6; }
+
+  .field select option { background: var(--surface2); }
+
+  /* RESULTADO IA */
+  .ia-result {
+    margin-top: 20px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    display: none;
+  }
+
+  .ia-result-header {
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text2);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .ia-result-body { padding: 16px; }
+
+  .result-field {
+    margin-bottom: 12px;
+  }
+
+  .result-field label {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--text3);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    display: block;
+    margin-bottom: 4px;
+  }
+
+  .result-field input,
+  .result-field select,
+  .result-field textarea {
+    width: 100%;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 8px 10px;
+    color: var(--text);
+    font-family: inherit;
+    font-size: 13px;
+    outline: none;
+  }
+
+  .result-field textarea { min-height: 80px; resize: vertical; }
+
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 2px 8px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 600;
+  }
+
+  /* TAB: MANUAL */
+  .manual-wrap {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+
+  .manual-toolbar {
+    padding: 16px 24px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    flex-shrink: 0;
+  }
+
+  .search-box {
+    flex: 1;
+    position: relative;
+  }
+
+  .search-box input {
+    width: 100%;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 8px 12px 8px 36px;
+    color: var(--text);
+    font-family: inherit;
+    font-size: 13px;
+    outline: none;
+    transition: border-color 0.15s;
+  }
+
+  .search-box input:focus { border-color: var(--accent); }
+
+  .search-box svg {
+    position: absolute;
+    left: 10px; top: 50%;
+    transform: translateY(-50%);
+    color: var(--text3);
+    pointer-events: none;
+  }
+
+  .filter-select {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 8px 12px;
+    color: var(--text2);
+    font-family: inherit;
+    font-size: 13px;
+    outline: none;
+    cursor: pointer;
+  }
+
+  .manual-list {
+    flex: 1;
+    overflow-y: auto;
+    padding: 16px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .dica-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 16px;
+    transition: border-color 0.15s;
+  }
+
+  .dica-card:hover { border-color: var(--border); }
+
+  .dica-card-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 8px;
+  }
+
+  .dica-title {
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 1.4;
+  }
+
+  .dica-meta {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+    flex-shrink: 0;
+  }
+
+  .dica-body {
+    color: var(--text2);
+    font-size: 13px;
+    line-height: 1.6;
+    white-space: pre-wrap;
+  }
+
+  .dica-footer {
+    margin-top: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .dica-date { font-size: 11px; color: var(--text3); }
+
+  .dica-actions { display: flex; gap: 6px; }
+
+  .icon-btn {
+    width: 28px; height: 28px;
+    border-radius: 5px;
+    border: 1px solid var(--border);
+    background: none;
+    color: var(--text3);
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.15s;
+    font-size: 13px;
+  }
+
+  .icon-btn:hover { color: var(--text); border-color: var(--text2); }
+  .icon-btn.delete:hover { color: var(--danger); border-color: var(--danger); }
+
+  .empty-state {
+    text-align: center;
+    padding: 60px 20px;
+    color: var(--text3);
+  }
+
+  .empty-state svg { margin-bottom: 12px; opacity: 0.4; }
+  .empty-state p { font-size: 14px; }
+
+  /* TAB: CONFIG */
+  .config-wrap {
+    max-width: 660px;
+    margin: 0 auto;
+    padding: 32px 24px;
+    width: 100%;
+  }
+
+  .config-section {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    margin-bottom: 20px;
+    overflow: hidden;
+  }
+
+  .config-section-title {
+    padding: 14px 16px;
+    border-bottom: 1px solid var(--border);
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text2);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .config-list { padding: 8px; }
+
+  .config-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 8px;
+    border-radius: var(--radius-sm);
+  }
+
+  .config-item:hover { background: var(--surface2); }
+
+  .config-item-name {
+    flex: 1;
+    font-size: 14px;
+  }
+
+  .config-item input {
+    flex: 1;
+    background: var(--surface2);
+    border: 1px solid var(--accent);
+    border-radius: var(--radius-sm);
+    padding: 5px 8px;
+    color: var(--text);
+    font-family: inherit;
+    font-size: 14px;
+    outline: none;
+  }
+
+  .color-dot {
+    width: 14px; height: 14px;
+    border-radius: 50%;
+    cursor: pointer;
+    border: 2px solid rgba(255,255,255,0.1);
+    flex-shrink: 0;
+  }
+
+  .add-item-row {
+    padding: 8px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    gap: 8px;
+  }
+
+  .add-item-row input {
+    flex: 1;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 7px 10px;
+    color: var(--text);
+    font-family: inherit;
+    font-size: 13px;
+    outline: none;
+  }
+
+  /* API KEY */
+  .api-key-section { padding: 16px; }
+
+  .api-key-field {
+    display: flex;
+    gap: 8px;
+    margin-top: 8px;
+  }
+
+  .api-key-field input {
+    flex: 1;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 9px 12px;
+    color: var(--text);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    outline: none;
+  }
+
+  /* SHAREPOINT */
+  .sp-fields { padding: 16px; display: flex; flex-direction: column; gap: 12px; }
+
+  .sp-field label {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--text3);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    display: block;
+    margin-bottom: 5px;
+  }
+
+  .sp-field input {
+    width: 100%;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 9px 12px;
+    color: var(--text);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    outline: none;
+  }
+
+  /* MODAL */
+  .modal-overlay {
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,0.6);
+    z-index: 100;
+    display: none;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .modal-overlay.open { display: flex; }
+
+  .modal {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 24px;
+    width: 100%;
+    max-width: 500px;
+    margin: 16px;
+  }
+
+  .modal-title {
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 16px;
+  }
+
+  .modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+    margin-top: 20px;
+  }
+
+  /* TOAST */
+  .toast {
+    position: fixed;
+    bottom: 24px; right: 24px;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 12px 16px;
+    font-size: 13px;
+    z-index: 200;
+    transform: translateY(20px);
+    opacity: 0;
+    transition: all 0.25s;
+    max-width: 320px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .toast.show { transform: translateY(0); opacity: 1; }
+  .toast.success { border-left: 3px solid var(--success); }
+  .toast.error { border-left: 3px solid var(--danger); }
+
+  /* LOADING */
+  .spinner {
+    width: 14px; height: 14px;
+    border: 2px solid rgba(255,255,255,0.2);
+    border-top-color: #fff;
+    border-radius: 50%;
+    animation: spin 0.6s linear infinite;
+    display: inline-block;
+  }
+
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* SCROLLBAR */
+  ::-webkit-scrollbar { width: 5px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 10px; }
+  ::-webkit-scrollbar-thumb:hover { background: var(--text3); }
+
+  /* PRIORITY COLORS */
+  .p-alta { background: rgba(239,68,68,0.15); color: #f87171; }
+  .p-media { background: rgba(245,158,11,0.15); color: #fbbf24; }
+  .p-baixa { background: rgba(62,207,142,0.15); color: #6ee7b7; }
+  .p-info { background: rgba(91,141,238,0.15); color: #93c5fd; }
+</style>
+<script src="./Manual do Escritório_files/msal-browser.min.js.baixados"></script></head>
+<body>
+
+<div class="app">
+  <header>
+    <div class="logo">
+      <div class="logo-icon">📋</div>
+      Manual do Escritório
+    </div>
+    <div class="nav">
+      <button class="nav-btn active" onclick="showTab(&#39;nova&#39;)">
+        ✦ Nova dica
+      </button>
+      <button class="nav-btn" onclick="showTab(&#39;manual&#39;)">
+        ☰ Manual
+      </button>
+      <button class="nav-btn" onclick="showTab(&#39;config&#39;)">
+        ⚙ Config
+      </button>
+    </div>
+    <div class="sync-status">
+      <div class="sync-dot" id="syncDot"></div>
+      <span id="syncLabel">Local</span>
+    </div>
+  </header>
+
+  <div class="main">
+
+    <!-- TAB: NOVA DICA -->
+    <div class="tab-content active" id="tab-nova">
+      <div class="nova-dica-wrap">
+        <div class="section-title">Registrar nova dica</div>
+        <div class="section-sub">Cole o texto solto e a IA organiza, ou preencha manualmente.</div>
+
+        <div class="mode-toggle">
+          <button class="mode-btn active" id="modeIA" onclick="setMode(&#39;ia&#39;)">✦ Organizar com IA</button>
+          <button class="mode-btn" id="modeManual" onclick="setMode(&#39;manual&#39;)">✎ Preencher manualmente</button>
+        </div>
+
+        <!-- IA MODE -->
+        <div id="iaMode">
+          <div class="ia-box">
+            <textarea id="iaInput" placeholder="Cole aqui a dica solta, bagunçada, como anotou no dia a dia. Pode ser múltiplas dicas de uma vez. A IA vai classificar, organizar e reescrever de forma técnica..."></textarea>
+            <div class="ia-box-footer">
+              <span class="ia-hint">A IA usa sua API Key do Claude (configurar em ⚙ Config)</span>
+              <button class="btn btn-primary" id="btnOrganizar" onclick="organizarComIA()">
+                ✦ Organizar com IA
+              </button>
+            </div>
+          </div>
+
+          <div class="ia-result" id="iaResult">
+            <div class="ia-result-header">
+              <span>Resultado — revise e salve</span>
+              <button class="btn btn-ghost" style="padding:4px 10px;font-size:12px" onclick="document.getElementById(&#39;iaResult&#39;).style.display=&#39;none&#39;">✕</button>
+            </div>
+            <div class="ia-result-body" id="iaResultBody"></div>
+            <div style="padding:12px 16px;border-top:1px solid var(--border);display:flex;gap:8px;justify-content:flex-end">
+              <button class="btn btn-ghost" onclick="document.getElementById(&#39;iaResult&#39;).style.display=&#39;none&#39;">Descartar</button>
+              <button class="btn btn-success" onclick="salvarResultadoIA()">✔ Salvar tudo</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- MANUAL MODE -->
+        <div id="manualMode" style="display:none">
+          <div class="manual-form">
+            <div class="field">
+              <label>Título</label>
+              <input type="text" id="mTitulo" placeholder="Título claro e objetivo da dica">
+            </div>
+            <div class="form-row">
+              <div class="field">
+                <label>Categoria</label>
+                <select id="mCategoria"><option>Tributário</option><option>Processual</option><option>Administrativo</option><option>Trabalhista</option><option>Geral</option></select>
+              </div>
+              <div class="field">
+                <label>Prioridade</label>
+                <select id="mPrioridade"><option>Alta</option><option>Média</option><option>Baixa</option><option>Informação</option></select>
+              </div>
+            </div>
+            <div class="field">
+              <label>Conteúdo</label>
+              <textarea id="mConteudo" placeholder="Descreva a dica com detalhes. Use quebras de linha para listas ou passos."></textarea>
+            </div>
+            <div style="display:flex;justify-content:flex-end;gap:8px">
+              <button class="btn btn-ghost" onclick="limparForm()">Limpar</button>
+              <button class="btn btn-primary" onclick="salvarManual()">✔ Salvar dica</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB: MANUAL -->
+    <div class="tab-content" id="tab-manual">
+      <div class="manual-wrap">
+        <div class="manual-toolbar">
+          <div class="search-box">
+            <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.35-4.35"></path></svg>
+            <input type="text" id="searchInput" placeholder="Buscar dicas..." oninput="renderDicas()">
+          </div>
+          <select class="filter-select" id="filterCat" onchange="renderDicas()"><option value="">Todas as categorias</option><option>Tributário</option><option>Processual</option><option>Administrativo</option><option>Trabalhista</option><option>Geral</option></select>
+          <select class="filter-select" id="filterPri" onchange="renderDicas()"><option value="">Todas as prioridades</option><option>Alta</option><option>Média</option><option>Baixa</option><option>Informação</option></select>
+          <button class="btn btn-ghost" onclick="exportarTxt()">⬇ Exportar .txt</button>
+        </div>
+        <div class="manual-list" id="manualList"><div class="empty-state">
+      <svg width="40" height="40" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M9 12h6m-6 4h6m2 5H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5.586a1 1 0 0 1 .707.293l5.414 5.414a1 1 0 0 1 .293.707V19a2 2 0 0 1-2 2z"></path></svg>
+      <p>Nenhuma dica encontrada.</p>
+    </div></div>
+      </div>
+    </div>
+
+    <!-- TAB: CONFIG -->
+    <div class="tab-content" id="tab-config">
+      <div class="config-wrap">
+        <div class="section-title">Configurações</div>
+        <div class="section-sub">Gerencie categorias, prioridades e integrações.</div>
+
+        <!-- API Key -->
+        <div class="config-section">
+          <div class="config-section-title">🔑 API Key do Claude</div>
+          <div class="api-key-section">
+            <div style="color:var(--text2);font-size:13px;margin-bottom:8px">
+              Necessária para o modo "Organizar com IA". Obtenha em <a href="https://console.anthropic.com/" target="_blank" style="color:var(--accent)">console.anthropic.com</a>.
+            </div>
+            <div class="api-key-field">
+              <input type="password" id="apiKeyInput" placeholder="sk-ant-api03-...">
+              <button class="btn btn-primary" onclick="salvarApiKey()">Salvar</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Categorias -->
+        <div class="config-section">
+          <div class="config-section-title">🗂 Categorias</div>
+          <div class="config-list" id="catList">
+    <div class="config-item">
+      <span class="config-item-name">Tributário</span>
+      <button class="icon-btn" onclick="editCat(0)" title="Renomear">✎</button>
+      <button class="icon-btn delete" onclick="removeCat(0)" title="Remover">✕</button>
+    </div>
+  
+    <div class="config-item">
+      <span class="config-item-name">Processual</span>
+      <button class="icon-btn" onclick="editCat(1)" title="Renomear">✎</button>
+      <button class="icon-btn delete" onclick="removeCat(1)" title="Remover">✕</button>
+    </div>
+  
+    <div class="config-item">
+      <span class="config-item-name">Administrativo</span>
+      <button class="icon-btn" onclick="editCat(2)" title="Renomear">✎</button>
+      <button class="icon-btn delete" onclick="removeCat(2)" title="Remover">✕</button>
+    </div>
+  
+    <div class="config-item">
+      <span class="config-item-name">Trabalhista</span>
+      <button class="icon-btn" onclick="editCat(3)" title="Renomear">✎</button>
+      <button class="icon-btn delete" onclick="removeCat(3)" title="Remover">✕</button>
+    </div>
+  
+    <div class="config-item">
+      <span class="config-item-name">Geral</span>
+      <button class="icon-btn" onclick="editCat(4)" title="Renomear">✎</button>
+      <button class="icon-btn delete" onclick="removeCat(4)" title="Remover">✕</button>
+    </div>
+  </div>
+          <div class="add-item-row">
+            <input type="text" id="newCatInput" placeholder="Nova categoria..." onkeydown="if(event.key===&#39;Enter&#39;)addCategoria()">
+            <button class="btn btn-primary" onclick="addCategoria()">+ Adicionar</button>
+          </div>
+        </div>
+
+        <!-- Prioridades -->
+        <div class="config-section">
+          <div class="config-section-title">🎯 Prioridades</div>
+          <div class="config-list" id="priList">
+    <div class="config-item">
+      <div class="color-dot" style="background:#ef4444" title="Cor"></div>
+      <span class="config-item-name">Alta</span>
+      <button class="icon-btn" onclick="editPri(0)" title="Renomear">✎</button>
+      <button class="icon-btn delete" onclick="removePri(0)" title="Remover">✕</button>
+    </div>
+  
+    <div class="config-item">
+      <div class="color-dot" style="background:#f59e0b" title="Cor"></div>
+      <span class="config-item-name">Média</span>
+      <button class="icon-btn" onclick="editPri(1)" title="Renomear">✎</button>
+      <button class="icon-btn delete" onclick="removePri(1)" title="Remover">✕</button>
+    </div>
+  
+    <div class="config-item">
+      <div class="color-dot" style="background:#3ecf8e" title="Cor"></div>
+      <span class="config-item-name">Baixa</span>
+      <button class="icon-btn" onclick="editPri(2)" title="Renomear">✎</button>
+      <button class="icon-btn delete" onclick="removePri(2)" title="Remover">✕</button>
+    </div>
+  
+    <div class="config-item">
+      <div class="color-dot" style="background:#5b8dee" title="Cor"></div>
+      <span class="config-item-name">Informação</span>
+      <button class="icon-btn" onclick="editPri(3)" title="Renomear">✎</button>
+      <button class="icon-btn delete" onclick="removePri(3)" title="Remover">✕</button>
+    </div>
+  </div>
+          <div class="add-item-row">
+            <input type="text" id="newPriInput" placeholder="Nova prioridade..." onkeydown="if(event.key===&#39;Enter&#39;)addPrioridade()">
+            <input type="color" id="newPriColor" value="#5b8dee" style="width:36px;height:36px;border:none;background:none;cursor:pointer;padding:0;border-radius:4px">
+            <button class="btn btn-primary" onclick="addPrioridade()">+ Adicionar</button>
+          </div>
+        </div>
+
+        <!-- SharePoint -->
+        <div class="config-section">
+          <div class="config-section-title">☁ SharePoint / OneDrive</div>
+          <div class="sp-fields">
+            <div style="color:var(--text2);font-size:13px">
+              Sincroniza as dicas num arquivo JSON no SharePoint para toda a equipe acessar.
+            </div>
+            <div class="sp-field">
+              <label>Client ID (Azure App Registration)</label>
+              <input type="text" id="spClientId" placeholder="xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx">
+            </div>
+            <div class="sp-field">
+              <label>Site ID do SharePoint</label>
+              <input type="text" id="spSiteId" placeholder="xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx">
+            </div>
+            <div class="sp-field">
+              <label>Nome da biblioteca (ex: Documentos)</label>
+              <input type="text" id="spLibrary" placeholder="Documentos do setor">
+            </div>
+            <div class="sp-field">
+              <label>Caminho do arquivo JSON (ex: manual/dicas.json)</label>
+              <input type="text" id="spFilePath" placeholder="Rascunhos André Fernando/Manual do Núcleo Teste/dicas.json">
+            </div>
+            <div style="display:flex;gap:8px">
+              <button class="btn btn-primary" onclick="salvarConfigSP()">Salvar configuração</button>
+              <button class="btn btn-ghost" onclick="conectarSharePoint()">Conectar ao SharePoint</button>
+            </div>
+            <div id="spStatus" style="font-size:12px;color:var(--text3)"></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL EDITAR -->
+<div class="modal-overlay" id="editModal">
+  <div class="modal">
+    <div class="modal-title">Editar dica</div>
+    <div class="field" style="margin-bottom:12px">
+      <label>Título</label>
+      <input type="text" id="editTitulo">
+    </div>
+    <div class="form-row" style="margin-bottom:12px">
+      <div class="field">
+        <label>Categoria</label>
+        <select id="editCategoria"></select>
+      </div>
+      <div class="field">
+        <label>Prioridade</label>
+        <select id="editPrioridade"></select>
+      </div>
+    </div>
+    <div class="field">
+      <label>Conteúdo</label>
+      <textarea id="editConteudo" style="min-height:120px"></textarea>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" onclick="closeModal()">Cancelar</button>
+      <button class="btn btn-primary" onclick="salvarEdicao()">Salvar</button>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+// ============================================================
+// STATE
+// ============================================================
+let state = {
+  dicas: [],
+  categorias: ['Tributário', 'Processual', 'Administrativo', 'Trabalhista', 'Geral'],
+  prioridades: [
+    { nome: 'Alta', cor: '#ef4444' },
+    { nome: 'Média', cor: '#f59e0b' },
+    { nome: 'Baixa', cor: '#3ecf8e' },
+    { nome: 'Informação', cor: '#5b8dee' },
+  ],
+  apiKey: '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',
+  sp: { clientId: '', siteId: '', library: "Documentos do setor", filePath: "Rascunhos André Fernando/Manual do Núcleo Teste/dicas.json" },
+  msalToken: null,
+};
+
+let editingId = null;
+let iaResultItems = [];
+
+// ============================================================
+// INIT
+// ============================================================
+window.onload = async () => {
+  loadFromLocal();
+  renderSelects();
+  renderDicas();
+  renderCatList();
+  renderPriList();
+  loadConfigInputs();
+
+  // Preenche ClientID e SiteID se já salvos
+  document.getElementById('spClientId').value = state.sp.clientId || 'f4a7e5b1-0673-49c5-be3a-391efe3a3db3';
+  document.getElementById('spSiteId').value = state.sp.siteId || '40fa2544-fb84-418e-bc02-7f8b79583dd2';
+
+  if (state.sp.clientId && state.sp.siteId) {
+    await tryAutoConnect();
+  }
+};
+
+// ============================================================
+// LOCAL STORAGE
+// ============================================================
+function loadFromLocal() {
+  try {
+    const s = localStorage.getItem('manualEscritorio');
+    if (s) {
+      const d = JSON.parse(s);
+      state = { ...state, ...d };
+    }
+  } catch(e) {}
+  // pre-fill SP defaults if empty
+  if (!state.sp.clientId) state.sp.clientId = 'f4a7e5b1-0673-49c5-be3a-391efe3a3db3';
+  if (!state.sp.siteId) state.sp.siteId = '40fa2544-fb84-418e-bc02-7f8b79583dd2';
+}
+
+function saveToLocal() {
+  localStorage.setItem('manualEscritorio', JSON.stringify(state));
+}
+
+// ============================================================
+// MSAL / SHAREPOINT
+// ============================================================
+let msalApp = null;
+
+function loadMSAL() {
+  return new Promise((resolve, reject) => {
+    if (window.msal) return resolve();
+    const s = document.createElement('script');
+    s.src = 'https://alcdn.msauth.net/browser/2.38.1/js/msal-browser.min.js';
+    s.onload = resolve;
+    s.onerror = reject;
+    document.head.appendChild(s);
+  });
+}
+
+async function initMSAL() {
+  await loadMSAL();
+  const config = {
+    auth: {
+      clientId: state.sp.clientId,
+      authority: 'https://login.microsoftonline.com/dalcortivoadvbr.onmicrosoft.com',
+      redirectUri: window.location.href.split('?')[0],
+    },
+    cache: { cacheLocation: 'localStorage', storeAuthStateInCookie: false }
+  };
+  msalApp = new msal.PublicClientApplication(config);
+  await msalApp.initialize();
+}
+
+async function getToken() {
+  if (!msalApp) await initMSAL();
+  const accounts = msalApp.getAllAccounts();
+  const req = { scopes: ['https://graph.microsoft.com/Files.ReadWrite.All', 'https://graph.microsoft.com/Sites.ReadWrite.All'] };
+  try {
+    if (accounts.length > 0) {
+      const r = await msalApp.acquireTokenSilent({ ...req, account: accounts[0] });
+      return r.accessToken;
+    }
+  } catch(e) {}
+  const r = await msalApp.acquireTokenPopup(req);
+  return r.accessToken;
+}
+
+async function tryAutoConnect() {
+  try {
+    await initMSAL();
+    const accounts = msalApp.getAllAccounts();
+    if (accounts.length > 0) {
+      await syncFromSharePoint();
+    }
+  } catch(e) {}
+}
+
+async function conectarSharePoint() {
+  salvarConfigSP();
+  setSyncStatus('syncing', 'Conectando...');
+  try {
+    const token = await getToken();
+    state.msalToken = token;
+    await syncFromSharePoint();
+    toast('Conectado ao SharePoint!', 'success');
+  } catch(e) {
+    setSyncStatus('error', 'Erro');
+    toast('Erro ao conectar: ' + e.message, 'error');
+  }
+}
+
+function spDriveUrl() {
+  return `https://graph.microsoft.com/v1.0/sites/${state.sp.siteId}/drives`;
+}
+
+async function getDriveId(token) {
+  const r = await fetch(spDriveUrl(), { headers: { Authorization: 'Bearer ' + token } });
+  const d = await r.json();
+  const lib = (state.sp.library || 'Documentos do setor').toLowerCase();
+  const drive = d.value.find(x => x.name.toLowerCase() === lib || x.name.toLowerCase() === 'documents');
+  if (!drive) throw new Error('Biblioteca não encontrada: ' + state.sp.library);
+  return drive.id;
+}
+
+async function syncFromSharePoint() {
+  const token = await getToken();
+  setSyncStatus('syncing', 'Sincronizando...');
+  try {
+    const driveId = await getDriveId(token);
+    const filePath = state.sp.filePath || 'Rascunhos André Fernando/Manual do Núcleo Teste/dicas.json';
+    const url = `https://graph.microsoft.com/v1.0/sites/${state.sp.siteId}/drives/${driveId}/root:/${filePath}:/content`;
+    const r = await fetch(url, { headers: { Authorization: 'Bearer ' + token } });
+    if (r.ok) {
+      const data = await r.json();
+      if (data.dicas) state.dicas = data.dicas;
+      if (data.categorias) state.categorias = data.categorias;
+      if (data.prioridades) state.prioridades = data.prioridades;
+      saveToLocal();
+      renderDicas();
+      renderSelects();
+      renderCatList();
+      renderPriList();
+    }
+    setSyncStatus('ok', 'SharePoint');
+  } catch(e) {
+    setSyncStatus('error', 'Erro sync');
+    console.error(e);
+  }
+}
+
+async function syncToSharePoint() {
+  try {
+    const token = await getToken();
+    const driveId = await getDriveId(token);
+    const filePath = state.sp.filePath || 'Rascunhos André Fernando/Manual do Núcleo Teste/dicas.json';
+    const url = `https://graph.microsoft.com/v1.0/sites/${state.sp.siteId}/drives/${driveId}/root:/${filePath}:/content`;
+    const body = JSON.stringify({ dicas: state.dicas, categorias: state.categorias, prioridades: state.prioridades });
+    setSyncStatus('syncing', 'Salvando...');
+    await fetch(url, {
+      method: 'PUT',
+      headers: { Authorization: 'Bearer ' + token, 'Content-Type': 'application/json' },
+      body
+    });
+    setSyncStatus('ok', 'SharePoint ✓');
+  } catch(e) {
+    setSyncStatus('error', 'Erro ao salvar');
+    console.error(e);
+  }
+}
+
+async function saveData() {
+  saveToLocal();
+  if (state.sp.clientId && state.sp.siteId && msalApp) {
+    await syncToSharePoint();
+  }
+}
+
+function setSyncStatus(type, label) {
+  const dot = document.getElementById('syncDot');
+  dot.className = 'sync-dot ' + type;
+  document.getElementById('syncLabel').textContent = label;
+}
+
+// ============================================================
+// TABS
+// ============================================================
+function showTab(tab) {
+  document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + tab).classList.add('active');
+  const btns = document.querySelectorAll('.nav-btn');
+  const map = { nova: 0, manual: 1, config: 2 };
+  btns[map[tab]].classList.add('active');
+  if (tab === 'manual') renderDicas();
+}
+
+// ============================================================
+// MODE TOGGLE
+// ============================================================
+function setMode(mode) {
+  document.getElementById('iaMode').style.display = mode === 'ia' ? 'block' : 'none';
+  document.getElementById('manualMode').style.display = mode === 'manual' ? 'block' : 'none';
+  document.getElementById('modeIA').classList.toggle('active', mode === 'ia');
+  document.getElementById('modeManual').classList.toggle('active', mode === 'manual');
+}
+
+// ============================================================
+// IA ORGANIZAR
+// ============================================================
+async function organizarComIA() {
+  const text = document.getElementById('iaInput').value.trim();
+  if (!text) return toast('Digite alguma dica primeiro.', 'error');
+  if (!state.apiKey) return toast('Configure sua API Key do Claude em ⚙ Config.', 'error');
+
+  const btn = document.getElementById('btnOrganizar');
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner"></span> Organizando...';
+
+  const cats = state.categorias.join(', ');
+  const pris = state.prioridades.map(p => p.nome).join(', ');
+
+  const prompt = `Você é um assistente jurídico especializado. Analise as dicas abaixo e organize cada uma delas.
+
+Categorias disponíveis: ${cats}
+Prioridades disponíveis: ${pris}
+
+Para cada dica identificada, responda em JSON válido, como um array:
+[
+  {
+    "titulo": "título técnico e claro",
+    "categoria": "uma das categorias acima",
+    "prioridade": "uma das prioridades acima",
+    "conteudo": "conteúdo reescrito de forma técnica e clara, mantendo o sentido original"
+  }
+]
+
+Responda APENAS com o JSON, sem explicações, sem markdown, sem backticks.
+
+Dicas para organizar:
+${text}`;
+
+  try {
+    const r = await fetch('https://corsproxy.io/?https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'x-api-key': state.apiKey, 'anthropic-version': '2023-06-01', 'anthropic-dangerous-direct-browser-ipc': 'true' },
+      body: JSON.stringify({ model: 'claude-sonnet-4-6', max_tokens: 2000, messages: [{ role: 'user', content: prompt }] })
+    });
+
+    const data = await r.json();
+    if (data.error) throw new Error(data.error.message);
+
+    const raw = data.content[0].text.trim();
+    const clean = raw.replace(/```json|```/g, '').trim();
+    iaResultItems = JSON.parse(clean);
+    renderIAResult(iaResultItems);
+
+  } catch(e) {
+    toast('Erro da IA: ' + e.message, 'error');
+  }
+
+  btn.disabled = false;
+  btn.innerHTML = '✦ Organizar com IA';
+}
+
+function renderIAResult(items) {
+  const body = document.getElementById('iaResultBody');
+  body.innerHTML = '';
+
+  items.forEach((item, i) => {
+    const priCls = getPriClass(item.prioridade);
+    const div = document.createElement('div');
+    div.style.cssText = 'margin-bottom:16px;padding-bottom:16px;border-bottom:1px solid var(--border)';
+    div.innerHTML = `
+      <div style="display:flex;align-items:center;gap:6px;margin-bottom:10px">
+        <span style="font-size:11px;color:var(--text3);font-weight:600">DICA ${i+1}</span>
+        <span class="badge ${priCls}" style="font-size:10px">${item.prioridade}</span>
+      </div>
+      <div class="result-field">
+        <label>Título</label>
+        <input type="text" id="rt${i}" value="${escHtml(item.titulo)}">
+      </div>
+      <div style="display:flex;gap:8px">
+        <div class="result-field" style="flex:1">
+          <label>Categoria</label>
+          <select id="rc${i}">${state.categorias.map(c=>`<option ${c===item.categoria?'selected':''}>${c}</option>`).join('')}</select>
+        </div>
+        <div class="result-field" style="flex:1">
+          <label>Prioridade</label>
+          <select id="rp${i}">${state.prioridades.map(p=>`<option ${p.nome===item.prioridade?'selected':''}>${p.nome}</option>`).join('')}</select>
+        </div>
+      </div>
+      <div class="result-field">
+        <label>Conteúdo</label>
+        <textarea id="rk${i}">${escHtml(item.conteudo)}</textarea>
+      </div>
+    `;
+    body.appendChild(div);
+  });
+
+  const result = document.getElementById('iaResult');
+  result.style.display = 'block';
+  result.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+
+async function salvarResultadoIA() {
+  const items = iaResultItems;
+  for (let i = 0; i < items.length; i++) {
+    const titulo = document.getElementById('rt'+i)?.value.trim();
+    const categoria = document.getElementById('rc'+i)?.value;
+    const prioridade = document.getElementById('rp'+i)?.value;
+    const conteudo = document.getElementById('rk'+i)?.value.trim();
+    if (!titulo || !conteudo) continue;
+    state.dicas.unshift({ id: Date.now() + i, titulo, categoria, prioridade, conteudo, data: new Date().toLocaleDateString('pt-BR') });
+  }
+  await saveData();
+  toast(`${items.length} dica(s) salva(s)!`, 'success');
+  document.getElementById('iaInput').value = '';
+  document.getElementById('iaResult').style.display = 'none';
+}
+
+// ============================================================
+// SALVAR MANUAL
+// ============================================================
+async function salvarManual() {
+  const titulo = document.getElementById('mTitulo').value.trim();
+  const categoria = document.getElementById('mCategoria').value;
+  const prioridade = document.getElementById('mPrioridade').value;
+  const conteudo = document.getElementById('mConteudo').value.trim();
+  if (!titulo || !conteudo) return toast('Preencha título e conteúdo.', 'error');
+  state.dicas.unshift({ id: Date.now(), titulo, categoria, prioridade, conteudo, data: new Date().toLocaleDateString('pt-BR') });
+  await saveData();
+  toast('Dica salva!', 'success');
+  limparForm();
+}
+
+function limparForm() {
+  ['mTitulo', 'mConteudo'].forEach(id => document.getElementById(id).value = '');
+}
+
+// ============================================================
+// RENDER DICAS
+// ============================================================
+function renderDicas() {
+  const list = document.getElementById('manualList');
+  const q = document.getElementById('searchInput').value.toLowerCase();
+  const catF = document.getElementById('filterCat').value;
+  const priF = document.getElementById('filterPri').value;
+
+  let dicas = state.dicas.filter(d => {
+    const match = !q || d.titulo.toLowerCase().includes(q) || d.conteudo.toLowerCase().includes(q);
+    const cat = !catF || d.categoria === catF;
+    const pri = !priF || d.prioridade === priF;
+    return match && cat && pri;
+  });
+
+  if (dicas.length === 0) {
+    list.innerHTML = `<div class="empty-state">
+      <svg width="40" height="40" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M9 12h6m-6 4h6m2 5H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5.586a1 1 0 0 1 .707.293l5.414 5.414a1 1 0 0 1 .293.707V19a2 2 0 0 1-2 2z"/></svg>
+      <p>Nenhuma dica encontrada.</p>
+    </div>`;
+    return;
+  }
+
+  list.innerHTML = dicas.map(d => {
+    const priCls = getPriClass(d.prioridade);
+    const priColor = getPriColor(d.prioridade);
+    return `
+    <div class="dica-card">
+      <div class="dica-card-header">
+        <div class="dica-title">${escHtml(d.titulo)}</div>
+        <div class="dica-meta">
+          <span class="badge ${priCls}">${d.prioridade}</span>
+          <span style="font-size:11px;color:var(--text3);background:var(--surface2);padding:2px 8px;border-radius:20px">${d.categoria}</span>
+        </div>
+      </div>
+      <div class="dica-body">${escHtml(d.conteudo)}</div>
+      <div class="dica-footer">
+        <span class="dica-date">${d.data || ''}</span>
+        <div class="dica-actions">
+          <button class="icon-btn" onclick="editDica(${d.id})" title="Editar">✎</button>
+          <button class="icon-btn delete" onclick="deleteDica(${d.id})" title="Excluir">✕</button>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+// ============================================================
+// EDITAR / DELETAR
+// ============================================================
+function editDica(id) {
+  const d = state.dicas.find(x => x.id === id);
+  if (!d) return;
+  editingId = id;
+  document.getElementById('editTitulo').value = d.titulo;
+  document.getElementById('editConteudo').value = d.conteudo;
+  fillSelect('editCategoria', state.categorias, d.categoria);
+  fillSelect('editPrioridade', state.prioridades.map(p=>p.nome), d.prioridade);
+  document.getElementById('editModal').classList.add('open');
+}
+
+function closeModal() {
+  document.getElementById('editModal').classList.remove('open');
+  editingId = null;
+}
+
+async function salvarEdicao() {
+  const d = state.dicas.find(x => x.id === editingId);
+  if (!d) return;
+  d.titulo = document.getElementById('editTitulo').value.trim();
+  d.categoria = document.getElementById('editCategoria').value;
+  d.prioridade = document.getElementById('editPrioridade').value;
+  d.conteudo = document.getElementById('editConteudo').value.trim();
+  await saveData();
+  renderDicas();
+  closeModal();
+  toast('Dica atualizada!', 'success');
+}
+
+async function deleteDica(id) {
+  if (!confirm('Excluir esta dica?')) return;
+  state.dicas = state.dicas.filter(x => x.id !== id);
+  await saveData();
+  renderDicas();
+  toast('Dica excluída.', 'success');
+}
+
+// ============================================================
+// EXPORTAR
+// ============================================================
+function exportarTxt() {
+  if (state.dicas.length === 0) return toast('Nenhuma dica para exportar.', 'error');
+  const cats = [...new Set(state.dicas.map(d => d.categoria))];
+  let txt = 'MANUAL DO ESCRITÓRIO\n';
+  txt += '='.repeat(40) + '\n';
+  txt += `Gerado em: ${new Date().toLocaleDateString('pt-BR')}\n`;
+  txt += `Total de dicas: ${state.dicas.length}\n\n`;
+  cats.forEach(cat => {
+    const dicas = state.dicas.filter(d => d.categoria === cat);
+    txt += `\n${'='.repeat(40)}\n${cat.toUpperCase()}\n${'='.repeat(40)}\n`;
+    dicas.forEach(d => {
+      txt += `\n[${d.prioridade}] ${d.titulo}\n`;
+      txt += '-'.repeat(30) + '\n';
+      txt += d.conteudo + '\n';
+    });
+  });
+  const blob = new Blob([txt], { type: 'text/plain;charset=utf-8' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = `manual-escritorio-${new Date().toISOString().slice(0,10)}.txt`;
+  a.click();
+}
+
+// ============================================================
+// CONFIG: CATEGORIAS / PRIORIDADES
+// ============================================================
+function renderSelects() {
+  fillSelect('mCategoria', state.categorias);
+  fillSelect('mPrioridade', state.prioridades.map(p=>p.nome));
+  // filters
+  const fc = document.getElementById('filterCat');
+  const fp = document.getElementById('filterPri');
+  if (fc) {
+    const cv = fc.value;
+    fc.innerHTML = '<option value="">Todas as categorias</option>' + state.categorias.map(c=>`<option>${c}</option>`).join('');
+    fc.value = cv;
+  }
+  if (fp) {
+    const pv = fp.value;
+    fp.innerHTML = '<option value="">Todas as prioridades</option>' + state.prioridades.map(p=>`<option>${p.nome}</option>`).join('');
+    fp.value = pv;
+  }
+}
+
+function fillSelect(id, options, selected) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.innerHTML = options.map(o=>`<option ${o===selected?'selected':''}>${o}</option>`).join('');
+}
+
+function renderCatList() {
+  const list = document.getElementById('catList');
+  list.innerHTML = state.categorias.map((c, i) => `
+    <div class="config-item">
+      <span class="config-item-name">${escHtml(c)}</span>
+      <button class="icon-btn" onclick="editCat(${i})" title="Renomear">✎</button>
+      <button class="icon-btn delete" onclick="removeCat(${i})" title="Remover">✕</button>
+    </div>
+  `).join('');
+}
+
+function renderPriList() {
+  const list = document.getElementById('priList');
+  list.innerHTML = state.prioridades.map((p, i) => `
+    <div class="config-item">
+      <div class="color-dot" style="background:${p.cor}" title="Cor"></div>
+      <span class="config-item-name">${escHtml(p.nome)}</span>
+      <button class="icon-btn" onclick="editPri(${i})" title="Renomear">✎</button>
+      <button class="icon-btn delete" onclick="removePri(${i})" title="Remover">✕</button>
+    </div>
+  `).join('');
+}
+
+function addCategoria() {
+  const v = document.getElementById('newCatInput').value.trim();
+  if (!v || state.categorias.includes(v)) return;
+  state.categorias.push(v);
+  document.getElementById('newCatInput').value = '';
+  saveToLocal(); renderCatList(); renderSelects();
+}
+
+function removeCat(i) {
+  if (!confirm('Remover categoria "' + state.categorias[i] + '"?')) return;
+  state.categorias.splice(i, 1);
+  saveToLocal(); renderCatList(); renderSelects();
+}
+
+function editCat(i) {
+  const novo = prompt('Novo nome:', state.categorias[i]);
+  if (!novo || novo === state.categorias[i]) return;
+  const old = state.categorias[i];
+  state.categorias[i] = novo;
+  state.dicas.forEach(d => { if (d.categoria === old) d.categoria = novo; });
+  saveToLocal(); renderCatList(); renderSelects();
+}
+
+function addPrioridade() {
+  const nome = document.getElementById('newPriInput').value.trim();
+  const cor = document.getElementById('newPriColor').value;
+  if (!nome || state.prioridades.find(p=>p.nome===nome)) return;
+  state.prioridades.push({ nome, cor });
+  document.getElementById('newPriInput').value = '';
+  saveToLocal(); renderPriList(); renderSelects();
+}
+
+function removePri(i) {
+  if (!confirm('Remover prioridade "' + state.prioridades[i].nome + '"?')) return;
+  state.prioridades.splice(i, 1);
+  saveToLocal(); renderPriList(); renderSelects();
+}
+
+function editPri(i) {
+  const novo = prompt('Novo nome:', state.prioridades[i].nome);
+  if (!novo || novo === state.prioridades[i].nome) return;
+  const old = state.prioridades[i].nome;
+  state.prioridades[i].nome = novo;
+  state.dicas.forEach(d => { if (d.prioridade === old) d.prioridade = novo; });
+  saveToLocal(); renderPriList(); renderSelects();
+}
+
+// ============================================================
+// API KEY / SHAREPOINT CONFIG
+// ============================================================
+function salvarApiKey() {
+  state.apiKey = document.getElementById('apiKeyInput').value.trim();
+  saveToLocal();
+  toast('API Key salva!', 'success');
+}
+
+function loadConfigInputs() {
+  if (state.apiKey) document.getElementById('apiKeyInput').value = state.apiKey;
+  if (state.sp) {
+    document.getElementById('spClientId').value = state.sp.clientId || '';
+    document.getElementById('spSiteId').value = state.sp.siteId || '';
+    document.getElementById('spLibrary').value = state.sp.library || 'Documentos do setor';
+    document.getElementById('spFilePath').value = state.sp.filePath || 'Rascunhos André Fernando/Manual do Núcleo Teste/dicas.json';
+  }
+}
+
+function salvarConfigSP() {
+  state.sp = {
+    clientId: document.getElementById('spClientId').value.trim(),
+    siteId: document.getElementById('spSiteId').value.trim(),
+    library: document.getElementById('spLibrary').value.trim() || 'Documentos do setor',
+    filePath: document.getElementById('spFilePath').value.trim() || 'Rascunhos André Fernando/Manual do Núcleo Teste/dicas.json',
+  };
+  saveToLocal();
+  toast('Configuração salva!', 'success');
+}
+
+// ============================================================
+// HELPERS
+// ============================================================
+function getPriClass(pri) {
+  const map = { 'Alta': 'p-alta', 'Média': 'p-media', 'Baixa': 'p-baixa', 'Informação': 'p-info' };
+  return map[pri] || 'p-info';
+}
+
+function getPriColor(pri) {
+  const p = state.prioridades.find(x => x.nome === pri);
+  return p ? p.cor : '#5b8dee';
+}
+
+function escHtml(s) {
+  return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+let toastTimer;
+function toast(msg, type = 'success') {
+  const el = document.getElementById('toast');
+  el.textContent = (type === 'success' ? '✔ ' : '✕ ') + msg;
+  el.className = 'toast ' + type + ' show';
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => el.classList.remove('show'), 3500);
+}
+
+// Close modal on overlay click
+document.getElementById('editModal').addEventListener('click', function(e) {
+  if (e.target === this) closeModal();
+});
+</script>
+
+
+</body></html>
