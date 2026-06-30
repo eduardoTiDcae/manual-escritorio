@@ -970,7 +970,7 @@ let state = {
     { nome: 'Baixa', cor: '#3ecf8e' },
     { nome: 'Informação', cor: '#5b8dee' },
   ],
-  apiKey: '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',
+  apiKey: '',
   sp: { clientId: '', siteId: '', library: "Documentos do setor", filePath: "Rascunhos André Fernando/Manual do Núcleo Teste/dicas.json" },
   msalToken: null,
 };
@@ -1219,7 +1219,7 @@ ${text}`;
   try {
     const r = await fetch('https://manual-proxy.eduardo-dcae.workers.dev/', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'x-api-key': state.apiKey, 'anthropic-version': '2023-06-01', 'anthropic-dangerous-direct-browser-ipc': 'true' },
+      headers: { 'Content-Type': 'application/json'},
       body: JSON.stringify({ model: 'claude-sonnet-4-6', max_tokens: 2000, messages: [{ role: 'user', content: prompt }] })
     });
 
