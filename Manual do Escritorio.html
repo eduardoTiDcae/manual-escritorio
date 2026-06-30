@@ -1217,7 +1217,7 @@ Dicas para organizar:
 ${text}`;
 
   try {
-    const r = await fetch('https://corsproxy.io/?https://api.anthropic.com/v1/messages', {
+    const r = await fetch('https://manual-proxy.eduardo-dcae.workers.dev/', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', 'x-api-key': state.apiKey, 'anthropic-version': '2023-06-01', 'anthropic-dangerous-direct-browser-ipc': 'true' },
       body: JSON.stringify({ model: 'claude-sonnet-4-6', max_tokens: 2000, messages: [{ role: 'user', content: prompt }] })
