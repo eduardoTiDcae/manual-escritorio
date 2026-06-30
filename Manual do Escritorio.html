@@ -1219,7 +1219,7 @@ ${text}`;
   try {
     const r = await fetch('https://manual-proxy.eduardo-dcae.workers.dev/', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json'},
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ model: 'claude-sonnet-4-6', max_tokens: 2000, messages: [{ role: 'user', content: prompt }] })
     });
 
